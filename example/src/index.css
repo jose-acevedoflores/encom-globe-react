@@ -6,9 +6,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color:black;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'Inconsolata';
+  src: url('./fonts/Inconsolata-Regular.ttf')  format('truetype'),
+      url('./fonts/Inconsolata-Light.ttf')  format('truetype'),
+      url('./fonts/Inconsolata-Medium.ttf')  format('truetype');
 }

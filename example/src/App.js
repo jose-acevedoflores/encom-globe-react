@@ -1,10 +1,21 @@
 import React from 'react'
 
-import { ExampleComponent } from 'encom-globe-react'
+import { EncomGlobe } from 'encom-globe-react'
 import 'encom-globe-react/dist/index.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+
+  const [state, setState] = React.useState({width: window.innerWidth, height: window.innerHeight})
+  React.useEffect(()=> {
+
+      const cb = () => setState({width: window.innerWidth, height: window.innerHeight});
+
+      window.addEventListener( 'resize', cb, false );
+
+      return () => window.removeEventListener('resize', cb)
+  });
+  
+  return <EncomGlobe width={state.width} height={state.height}/>
 }
 
 export default App

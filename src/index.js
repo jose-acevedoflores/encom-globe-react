@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './styles.module.css'
+import Globe from './encom';
 
-export const ExampleComponent = ({ text }) => {
-  return <div className={styles.test}>Example Component: {text}</div>
+export const EncomGlobe = ({ width, height }) => {
+  return <Globe width={width} height={height}/>
 }
