@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LeGlobe from './libs/Globe';
-import grid from './grid';
-import data from './data';
+import grid from './data/grid';
+import pinLocations from './data/pin-locations';
 
 const config = {
     font: "Inconsolata",
-    data: data, // copy the data array
+    data: pinLocations,
     tiles: grid.tiles,
     // baseColor: "blue",
     // markerColor: "red",
@@ -96,7 +96,9 @@ class Globe extends React.Component {
 
                 div.append(this.globe.domElement);
                 this.globe.init(this._start);
-                this._demo();
+                if(this.props.demo){
+                    this._demo();
+                }
             
                 this.setState({ready: true});
             });
@@ -111,6 +113,7 @@ class Globe extends React.Component {
 
 Globe.propTypes = {
     show: PropTypes.bool,
+    demo: PropTypes.bool,
     width: PropTypes.number,
     height: PropTypes.number,
 }

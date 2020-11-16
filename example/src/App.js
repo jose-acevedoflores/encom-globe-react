@@ -15,7 +15,7 @@ const App = () => {
       return () => window.removeEventListener('resize', cb)
   });
   
-  return <EncomGlobe width={state.width} height={state.height}/>
+  return <EncomGlobe width={state.width} height={state.height} demo/>
 }
 
 export default App

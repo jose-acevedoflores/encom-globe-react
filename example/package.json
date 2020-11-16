@@ -10,13 +10,14 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^18.6.4",
+    "encom-globe-react": "file:..",
+    "prop-types": "^15.7.2",
+    "pusher.color": "^0.2.4",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-scripts": "file:../node_modules/react-scripts",
-    "encom-globe-react": "file:..",
-    "@tweenjs/tween.js": "^18.6.4",
     "three": "^0.122.0",
-    "pusher.color": "^0.2.4",
     "vec2": "^1.6.1"
   },
   "devDependencies": {
