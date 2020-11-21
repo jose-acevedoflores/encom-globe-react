@@ -43,10 +43,11 @@ var utils = {
       var canvas = document.createElement("canvas");
       var context = canvas.getContext("2d");
       context.font = size + "pt " + font;
+
       var textWidth = context.measureText(text).width;
 
-      canvas.width = textWidth+10;
-      canvas.height = size + 30;
+      canvas.width = textWidth;
+      canvas.height = size + 10;
 
       // better if canvases have even heights
       if(canvas.width % 2){
