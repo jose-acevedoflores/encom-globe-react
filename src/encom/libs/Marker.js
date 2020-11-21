@@ -1,5 +1,5 @@
-var THREE = require('three'),
-    TWEEN = require("@tweenjs/tween.js");
+import * as THREE from 'three';
+import TWEEN from '@tweenjs/tween.js';
 import utils from './utils';
 
 var createMarkerTexture = function(markerColor) {

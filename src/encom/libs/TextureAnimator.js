@@ -1,4 +1,4 @@
-var THREE = require('three');
+import * as THREE from 'three';
 
 // based on http://stemkoski.github.io/Three.js/Texture-Animation.html
 var TextureAnimator = function(texture, tilesVert, tilesHoriz, numTiles, tileDispDuration, repeatAtTile) 
