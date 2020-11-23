@@ -1,7 +1,8 @@
 function isPowerOfTwo(x) {
     return Math.log2(x) % 1 === 0;
 }
-
+//NOTE: version 88 of THREE changed the way textured canvas are scaled opting to down scale to the lower power of two.
+// Example: 500px goes down to 256px in version 88 and up vs 512px on versions 87 and down.
 function nearestPowerOf2(n, underLine) {
     const upper = 2 << 31 - Math.clz32(n);
     if(!underLine){

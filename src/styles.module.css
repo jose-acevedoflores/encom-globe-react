@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+#globe-div{
+  overflow: hidden
+}
+
 /* 
 @font-face {
   font-family: 'Inconsolata';
