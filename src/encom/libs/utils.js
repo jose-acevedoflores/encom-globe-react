@@ -1,3 +1,18 @@
+function isPowerOfTwo(x) {
+    return Math.log2(x) % 1 === 0;
+}
+
+function nearestPowerOf2(n, underLine) {
+    const upper = 2 << 31 - Math.clz32(n);
+    if(!underLine){
+        return upper;
+    }
+    const lower = 1 << 31 - Math.clz32(n);
+    const udiff = Math.abs(upper - n);
+    const lowDiff = Math.abs(n - lower);
+    return  udiff > lowDiff ? lower : upper;
+}
+
 var utils = {
 
     renderToCanvas: function (width, height, renderFunction) {
@@ -45,9 +60,8 @@ var utils = {
       context.font = size + "pt " + font;
 
       var textWidth = context.measureText(text).width;
-
-      canvas.width = textWidth;
-      canvas.height = size + 10;
+      canvas.width = isPowerOfTwo(textWidth) ? textWidth : nearestPowerOf2(textWidth, underlineColor);
+      canvas.height = size + 14; 
 
       // better if canvases have even heights
       if(canvas.width % 2){

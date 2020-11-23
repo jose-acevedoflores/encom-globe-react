@@ -92,9 +92,9 @@ class Globe extends React.Component {
     componentDidMount(){
         if(!this.state.ready) {
             document.fonts.load('10pt "Inconsolata"').then(() => {
-                const div = document.getElementById("globe-div");
-
-                div.append(this.globe.domElement);
+                // const div = document.getElementById("globe-div");
+                this.mount.appendChild( this.globe.domElement );
+                // div.append(this.globe.domElement);
                 this.globe.init(this._start);
                 if(this.props.demo){
                     this._demo();
@@ -107,7 +107,7 @@ class Globe extends React.Component {
 
     render() {
         const {width, height} = this.props;
-        return <div id="globe-div" style={{height, width}}/>;
+        return <div id="globe-div" ref={ref => (this.mount = ref)} />;
     }
 }
 

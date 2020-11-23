@@ -163,9 +163,9 @@ var Satellite = function(lat, lon, altitude, scene, _opts, canvas, texture){
     this.onRemoveList = [];
 
     /* private vars */
-    numFrames = 50;
-    pixels = 100;
-    rows = 10;
+    numFrames = 64;
+    pixels = 128;
+    rows = 16;
     waveStart = Math.floor(numFrames/8);
 
     if(_opts){

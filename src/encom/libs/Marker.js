@@ -3,8 +3,8 @@ import TWEEN from '@tweenjs/tween.js';
 import utils from './utils';
 
 var createMarkerTexture = function(markerColor) {
-    var markerWidth = 30,
-        markerHeight = 30,
+    var markerWidth = 32,
+        markerHeight = 32,
         canvas,
         texture;
 
@@ -147,16 +147,18 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
         materialSpline = new THREE.LineBasicMaterial({
             color: this.opts.lineColor,
             transparent: true,
-            linewidth: 3,
+            linewidth: 2,
             opacity: .5
         });
 
         _this.geometrySplineDotted = new THREE.Geometry();
-        materialSplineDotted = new THREE.LineBasicMaterial({
+        materialSplineDotted = new THREE.LineDashedMaterial({
             color: this.opts.lineColor,
             linewidth: 1,
             transparent: true,
-            opacity: .5
+            opacity: .5,
+            gapSize: 1,
+            dashSize: 3,
         });
 
         latdist = (lat - previous.lat)/_this.opts.lineSegments;
@@ -223,8 +225,13 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
 
         update();
 
-        this.scene.add(new THREE.Line(_this.geometrySpline, materialSpline));
-        this.scene.add(new THREE.Line(_this.geometrySplineDotted, materialSplineDotted, THREE.LineSegments));
+        const topLine = new THREE.Line(_this.geometrySpline, materialSpline);
+        const dashedLine = new THREE.LineSegments(_this.geometrySplineDotted, materialSplineDotted);
+        // dashedLine.computeLineDistances();
+        dashedLine.frustumCulled = false;
+        topLine.frustumCulled = false;
+        this.scene.add(topLine);
+        this.scene.add(dashedLine);
     }
 
     this.scene.add(this.marker);

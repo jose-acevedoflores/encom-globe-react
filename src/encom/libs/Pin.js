@@ -4,8 +4,8 @@ import utils from './utils';
 
 
 var createTopCanvas = function(color) {
-    var markerWidth = 20,
-    markerHeight = 20;
+    var markerWidth = 16,
+    markerHeight = 16;
 
     return utils.renderToCanvas(markerWidth, markerHeight, function(ctx){
         ctx.fillStyle=color;
@@ -21,7 +21,7 @@ var Pin = function(lat, lon, text, altitude, scene, smokeProvider, _opts){
     /* options that can be passed in */
     var opts = {
         lineColor: "#8FD8D8",
-        lineWidth: 1,
+        lineWidth: 0.5,
         topColor: "#8FD8D8",
         smokeColor: "#FFF",
         labelColor: "#FFF",
