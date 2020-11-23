@@ -4,25 +4,89 @@
 
 [![NPM](https://img.shields.io/npm/v/encom-globe-react.svg)](https://www.npmjs.com/package/encom-globe-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## WORK IN PROGRESS
+
+This project is a fork of [arscan/encom-globe](https://github.com/arscan/encom-globe) with the goal of updating the code to the latest Three.js and make it an module that can be used with ReactJS.
+
 ## Install
 
 ```bash
+TODO
 npm install --save encom-globe-react
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 
-import MyComponent from 'encom-globe-react'
+import { EncomGlobe } from 'encom-globe-react'
 import 'encom-globe-react/dist/index.css'
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
+const marker1 = {lat: 49.25, lon: -123.1, label: "Vancouver"};
+const marker2 = {lat: 35.6895, lon: 129.69171, label: "Tokyo", connected: true};
+const demoMarkers = [marker1, marker2];
+
+const App = () => {
+
+  const [state, setState] = React.useState({width: window.innerWidth, height: window.innerHeight});
+  React.useEffect(()=> {
+
+      const cb = () => setState({width: window.innerWidth, height: window.innerHeight});
+
+      window.addEventListener( 'resize', cb, false );
+
+      return () => window.removeEventListener('resize', cb)
+  });
+
+  const [markers, setMarkers] = React.useState([]);
+  const [constellations, setConstellations] = React.useState([]);
+
+  const demo = () => {
+    console.log("Run demo");
+    // ADD MARKERS
+    setTimeout(() => setMarkers(demoMarkers), 4000);
+
+    //ADD SATELLITES
+    setTimeout(()=>{
+        const constellation = [];
+        const opts = {
+            waveColor: "#FFF",
+            coreColor: "#FF0000",
+            shieldColor: "#fff",
+            numWaves: 8
+        };
+        const alt =  1.3;
+
+        for(let i = 0; i< 2; i++){
+            for(let j = 0; j< 3; j++){
+                 constellation.push({
+                    lat: 50 * i - 30 + 15 * Math.random(), 
+                     lon: 120 * j - 120 + 30 * i, 
+                     altitude: alt
+                     });
+            }
+        }
+
+        setConstellations([{
+          opts,
+          sats: constellation
+        }])
+    }, 6000)
   }
+  
+  return <EncomGlobe 
+    width={state.width} 
+    height={state.height} 
+    markers={markers}
+    // satellites={satellites}
+    constellations={constellations}
+    globeReadyCb={demo}
+  />
 }
+
+export default App
+
 ```
 
 ## License
