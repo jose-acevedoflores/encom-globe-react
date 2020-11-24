@@ -1,5 +1,22 @@
 import TWEEN from '@tweenjs/tween.js';
-import * as THREE from 'three';
+import {
+    ShaderMaterial,
+    BufferGeometry,
+    BufferAttribute,
+    Vector3,
+    Line,
+    Color,
+    Mesh,
+    Geometry,
+    LineBasicMaterial,
+    VertexColors,
+    DoubleSide,
+    Object3D,
+    PerspectiveCamera,
+    Scene,
+    Fog,
+    WebGLRenderer,
+} from  'three';
 import Vec2 from 'vec2';
 import Pin from './Pin';
 import Marker from './Marker';
@@ -97,25 +114,25 @@ var createParticles = function(){
         currentTime: { type: 'f', value: 0.0}
     }
 
-    var pointMaterial = new THREE.ShaderMaterial( {
+    var pointMaterial = new ShaderMaterial( {
         uniforms:       this.pointUniforms,
         // attributes:     pointAttributes,
         vertexShader:   pointVertexShader,
         fragmentShader: pointFragmentShader,
         transparent:    true,
-        vertexColors: THREE.VertexColors,
-        side: THREE.DoubleSide
+        vertexColors: VertexColors,
+        side: DoubleSide
     });
 
     var triangles = this.tiles.length * 4;
 
-    var geometry = new THREE.BufferGeometry();
+    var geometry = new BufferGeometry();
 
-    geometry.setAttribute( 'index', new THREE.BufferAttribute(new Uint16Array(triangles * 3), 1 ));
-    geometry.setAttribute( 'position', new THREE.BufferAttribute(new Float32Array(triangles * 9), 3 ));
-    geometry.setAttribute( 'normal', new THREE.BufferAttribute(new Float32Array(triangles * 9), 3 ));
-    geometry.setAttribute( 'color', new THREE.BufferAttribute(new Float32Array(triangles * 9), 3 ));
-    geometry.setAttribute( 'lng', new THREE.BufferAttribute(new Float32Array(triangles * 3), 1 ));
+    geometry.setAttribute( 'index', new BufferAttribute(new Uint16Array(triangles * 3), 1 ));
+    geometry.setAttribute( 'position', new BufferAttribute(new Float32Array(triangles * 9), 3 ));
+    geometry.setAttribute( 'normal', new BufferAttribute(new Float32Array(triangles * 9), 3 ));
+    geometry.setAttribute( 'color', new BufferAttribute(new Float32Array(triangles * 9), 3 ));
+    geometry.setAttribute( 'lng', new BufferAttribute(new Float32Array(triangles * 3), 1 ));
 
     var lng_values = geometry.attributes.lng.array;
 
@@ -189,7 +206,7 @@ var createParticles = function(){
 
         var colorIndex = Math.floor(Math.random()*myColors.length);
         var colorRGB = myColors[colorIndex].rgb();
-        var color = new THREE.Color();
+        var color = new Color();
 
         color.setRGB(colorRGB[0]/255.0, colorRGB[1]/255.0, colorRGB[2]/255.0);
 
@@ -220,14 +237,14 @@ var createParticles = function(){
     }
 
     geometry.computeBoundingSphere()
-    this.hexGrid = new THREE.Mesh( geometry, pointMaterial );
+    this.hexGrid = new Mesh( geometry, pointMaterial );
     this.scene.add( this.hexGrid );
 
 };
 
 var createIntroLines = function(){
     var sPoint;
-    var introLinesMaterial = new THREE.LineBasicMaterial({
+    var introLinesMaterial = new LineBasicMaterial({
         color: this.introLinesColor,
         transparent: true,
         linewidth: 2,
@@ -235,7 +252,7 @@ var createIntroLines = function(){
     });
 
     for(let i = 0; i<this.introLinesCount; i++){
-        var geometry = new THREE.Geometry();
+        var geometry = new Geometry();
 
         var lat = Math.random()*180 + 90;
         var lon =  Math.random()*5;
@@ -248,12 +265,12 @@ var createIntroLines = function(){
 
         for(let j = 0; j< lenBase; j++){
             var thisPoint = utils.mapPoint(lat, lon - j * 5);
-            sPoint = new THREE.Vector3(thisPoint.x*this.introLinesAltitude, thisPoint.y*this.introLinesAltitude, thisPoint.z*this.introLinesAltitude);
+            sPoint = new Vector3(thisPoint.x*this.introLinesAltitude, thisPoint.y*this.introLinesAltitude, thisPoint.z*this.introLinesAltitude);
 
             geometry.vertices.push(sPoint);  
         }
 
-        this.introLines.add(new THREE.Line(geometry, introLinesMaterial));
+        this.introLines.add(new Line(geometry, introLinesMaterial));
 
     }
     this.scene.add(this.introLines);
@@ -272,7 +289,7 @@ function Globe(width, height, opts){
     this.height = height;
     // this.smokeIndex = 0;
     this.points = [];
-    this.introLines = new THREE.Object3D();
+    this.introLines = new Object3D();
     this.pins = [];
     this.markers = [];
     this.satelliteAnimations = [];
@@ -316,7 +333,7 @@ function Globe(width, height, opts){
 
     this.setScale(this.scale);
 
-    this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+    this.renderer = new WebGLRenderer( { antialias: true, alpha: true } );
     this.renderer.setSize( this.width, this.height);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     
@@ -339,15 +356,15 @@ function Globe(width, height, opts){
 Globe.prototype.init = function(cb){
 
     // create the camera
-    this.camera = new THREE.PerspectiveCamera( 50, this.width / this.height, 1, this.cameraDistance + 300 );
+    this.camera = new PerspectiveCamera( 50, this.width / this.height, 1, this.cameraDistance + 300 );
     this.camera.position.z = this.cameraDistance;
 
     this.cameraAngle=(Math.PI);
 
     // create the scene
-    this.scene = new THREE.Scene();
+    this.scene = new Scene();
 
-    this.scene.fog = new THREE.Fog( 0x000000, this.cameraDistance, this.cameraDistance+300 );
+    this.scene.fog = new Fog( 0x000000, this.cameraDistance, this.cameraDistance+300 );
 
     createIntroLines.call(this);
 

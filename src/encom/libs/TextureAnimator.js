@@ -1,4 +1,5 @@
-import * as THREE from 'three';
+import {RepeatWrapping } from  'three';
+
 
 // based on http://stemkoski.github.io/Three.js/Texture-Animation.html
 var TextureAnimator = function(texture, tilesVert, tilesHoriz, numTiles, tileDispDuration, repeatAtTile) 
@@ -19,7 +20,7 @@ var TextureAnimator = function(texture, tilesVert, tilesHoriz, numTiles, tileDis
     //  usually equals tilesHoriz * tilesVert, but not necessarily,
     //  if there at blank tiles at the bottom of the spritesheet. 
     this.numberOfTiles = numTiles;
-    texture.wrapS = texture.wrapT = THREE.RepeatWrapping; 
+    texture.wrapS = texture.wrapT = RepeatWrapping; 
     texture.repeat.set( 1 / this.tilesHorizontal, 1 / this.tilesVertical );
 
     // how long should each image be displayed?

@@ -1,6 +1,11 @@
 import TextureAnimator from './TextureAnimator';
-import * as THREE from 'three';
 import utils from './utils';
+import {
+    Texture,
+    PlaneGeometry,
+    MeshBasicMaterial,
+    Mesh,
+} from  'three';
 
 
 var createCanvas = function(numFrames, pixels, rows, waveStart, numWaves, waveColor, coreColor, shieldColor) {
@@ -180,14 +185,14 @@ var Satellite = function(lat, lon, altitude, scene, _opts, canvas, texture){
 
     if(!canvas){
         this.canvas = createCanvas(numFrames, pixels, rows, waveStart, opts.numWaves, opts.waveColor, opts.coreColor, opts.shieldColor);
-        this.texture = new THREE.Texture(this.canvas)
+        this.texture = new Texture(this.canvas)
         this.texture.needsUpdate = true;
         repeatAt = Math.floor(numFrames-2*(numFrames-waveStart)/opts.numWaves)+1;
         this.animator = new TextureAnimator(this.texture,rows, numFrames/rows, numFrames, 80, repeatAt); 
     } else {
         this.canvas = canvas;
         if(!texture){
-            this.texture = new THREE.Texture(this.canvas)
+            this.texture = new Texture(this.canvas)
             this.texture.needsUpdate = true;
             repeatAt = Math.floor(numFrames-2*(numFrames-waveStart)/opts.numWaves)+1;
             this.animator = new TextureAnimator(this.texture,rows, numFrames/rows, numFrames, 80, repeatAt); 
@@ -196,14 +201,14 @@ var Satellite = function(lat, lon, altitude, scene, _opts, canvas, texture){
         }
     }
 
-    geometry = new THREE.PlaneGeometry(opts.size * 150, opts.size * 150,1,1);
-    this.material = new THREE.MeshBasicMaterial({
+    geometry = new PlaneGeometry(opts.size * 150, opts.size * 150,1,1);
+    this.material = new MeshBasicMaterial({
         map : this.texture,
         depthTest: false,
         transparent: true
     });
 
-    this.mesh = new THREE.Mesh(geometry, this.material);
+    this.mesh = new Mesh(geometry, this.material);
     this.mesh.tiltMultiplier = Math.PI/2 * (1 - Math.abs(lat / 90));
     this.mesh.tiltDirection = (lat > 0 ? -1 : 1);
     this.mesh.lon = lon;
@@ -259,7 +264,7 @@ Satellite.prototype.changeCanvas = function(numWaves, waveColor, coreColor, shie
     }
 
     this.canvas = createCanvas(numFrames, pixels, rows, waveStart, numWaves, waveColor, coreColor, shieldColor);
-    this.texture = new THREE.Texture(this.canvas)
+    this.texture = new Texture(this.canvas)
     this.texture.needsUpdate = true;
     const repeatAt = Math.floor(numFrames-2*(numFrames-waveStart)/numWaves)+1;
     this.animator = new TextureAnimator(this.texture,rows, numFrames/rows, numFrames, 80, repeatAt); 

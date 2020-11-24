@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import LeGlobe from './libs/Globe';
 
 class Globe extends React.Component {

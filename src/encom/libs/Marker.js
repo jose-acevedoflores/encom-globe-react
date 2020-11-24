@@ -1,6 +1,16 @@
-import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 import utils from './utils';
+import {
+    SpriteMaterial,
+    Sprite,
+    Texture,
+    Geometry,
+    Vector3,
+    LineBasicMaterial,
+    Line,
+    LineSegments,
+    LineDashedMaterial,
+} from  'three';
 
 var createMarkerTexture = function(markerColor) {
     var markerWidth = 32,
@@ -22,7 +32,7 @@ var createMarkerTexture = function(markerColor) {
 
     });
 
-    texture = new THREE.Texture(canvas);
+    texture = new Texture(canvas);
     texture.needsUpdate = true;
 
     return texture;
@@ -85,17 +95,17 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
         scene._encom_markerTexture = createMarkerTexture(this.opts.markerColor);
     }
 
-    markerMaterial = new THREE.SpriteMaterial({map: scene._encom_markerTexture, name:"whodatmarker",opacity: .7, depthTest: true, fog: true});
-    this.marker = new THREE.Sprite(markerMaterial);
+    markerMaterial = new SpriteMaterial({map: scene._encom_markerTexture, name:"whodatmarker",opacity: .7, depthTest: true, fog: true});
+    this.marker = new Sprite(markerMaterial);
 
     this.marker.scale.set(0, 0);
     this.marker.position.set(point.x * altitude, point.y * altitude, point.z * altitude);
 
     labelCanvas = utils.createLabel(text.toUpperCase(), this.opts.fontSize, this.opts.labelColor, this.opts.font, this.opts.markerColor);
-    labelTexture = new THREE.Texture(labelCanvas);
+    labelTexture = new Texture(labelCanvas);
     labelTexture.needsUpdate = true;
 
-    labelMaterial = new THREE.SpriteMaterial({
+    labelMaterial = new SpriteMaterial({
         map : labelTexture,
         // useScreenCoordinates: false,
         opacity: 0,
@@ -104,7 +114,7 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
         name:"anothamarker"
     });
 
-    this.labelSprite = new THREE.Sprite(labelMaterial);
+    this.labelSprite = new Sprite(labelMaterial);
     this.labelSprite.position.set(point.x * altitude * 1.1, point.y*altitude*1.05 + (point.y < 0 ? -15 : 30), point.z * altitude * 1.1);
     this.labelSprite.scale.set(labelCanvas.width, labelCanvas.height);
 
@@ -143,16 +153,16 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
         //   currentVert,
           update;
 
-        _this.geometrySpline = new THREE.Geometry();
-        materialSpline = new THREE.LineBasicMaterial({
+        _this.geometrySpline = new Geometry();
+        materialSpline = new LineBasicMaterial({
             color: this.opts.lineColor,
             transparent: true,
             linewidth: 2,
             opacity: .5
         });
 
-        _this.geometrySplineDotted = new THREE.Geometry();
-        materialSplineDotted = new THREE.LineDashedMaterial({
+        _this.geometrySplineDotted = new Geometry();
+        materialSplineDotted = new LineDashedMaterial({
             color: this.opts.lineColor,
             linewidth: 1,
             transparent: true,
@@ -181,8 +191,8 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
                 pointList2.push({lat: nextlat+1, lon: nextlon, index: j});
             }
             // var thisPoint = mapPoint(nextlat, nextlon);
-            const sPoint = new THREE.Vector3(startPoint.x*1.2, startPoint.y*1.2, startPoint.z*1.2);
-            const sPoint2 = new THREE.Vector3(startPoint.x*1.2, startPoint.y*1.2, startPoint.z*1.2);
+            const sPoint = new Vector3(startPoint.x*1.2, startPoint.y*1.2, startPoint.z*1.2);
+            const sPoint2 = new Vector3(startPoint.x*1.2, startPoint.y*1.2, startPoint.z*1.2);
             // sPoint = new THREE.Vector3(thisPoint.x*1.2, thisPoint.y*1.2, thisPoint.z*1.2);
 
             sPoint.globe_index = j;
@@ -225,8 +235,8 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
 
         update();
 
-        const topLine = new THREE.Line(_this.geometrySpline, materialSpline);
-        const dashedLine = new THREE.LineSegments(_this.geometrySplineDotted, materialSplineDotted);
+        const topLine = new Line(_this.geometrySpline, materialSpline);
+        const dashedLine = new LineSegments(_this.geometrySplineDotted, materialSplineDotted);
         // dashedLine.computeLineDistances();
         dashedLine.frustumCulled = false;
         topLine.frustumCulled = false;

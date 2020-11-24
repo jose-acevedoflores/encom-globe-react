@@ -1,5 +1,12 @@
-var THREE = require('three');
 import utils from './utils';
+import {
+    Points,
+    ShaderMaterial,
+    BufferAttribute,
+    BufferGeometry,
+    Color,
+} from  'three';
+
 
 var vertexShader = [
     "#define PI 3.141592653589793238462643",
@@ -79,23 +86,23 @@ var SmokeProvider = function(scene, _opts){
 
     this.opts = opts;
 
-    this.geometry = new THREE.BufferGeometry();
+    this.geometry = new BufferGeometry();
     
 
-    this.geometry.setAttribute( 'myStartTime', new THREE.BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
-    this.geometry.setAttribute( 'myStartLat', new THREE.BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
-    this.geometry.setAttribute( 'myStartLon', new THREE.BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
-    this.geometry.setAttribute( 'altitude', new THREE.BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
-    this.geometry.setAttribute( 'activo', new THREE.BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
-    this.geometry.setAttribute( 'position', new THREE.BufferAttribute(new Float32Array(3*opts.smokeCount), 3 ));
+    this.geometry.setAttribute( 'myStartTime', new BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
+    this.geometry.setAttribute( 'myStartLat', new BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
+    this.geometry.setAttribute( 'myStartLon', new BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
+    this.geometry.setAttribute( 'altitude', new BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
+    this.geometry.setAttribute( 'activo', new BufferAttribute(new Float32Array(opts.smokeCount), 1 ));
+    this.geometry.setAttribute( 'position', new BufferAttribute(new Float32Array(3*opts.smokeCount), 3 ));
     
 
     this.uniforms = {
         currentTime: { type: 'f', value: 0.0},
-        color: { type: 'c', value: new THREE.Color("#aaa")},
+        color: { type: 'c', value: new Color("#aaa")},
     }
 
-    var material = new THREE.ShaderMaterial( {
+    var material = new ShaderMaterial( {
         uniforms:       this.uniforms,
         vertexShader:   vertexShader,
         fragmentShader: fragmentShader,
@@ -124,7 +131,7 @@ var SmokeProvider = function(scene, _opts){
     this.smokeIndex = 0;
     this.totalRunTime = 0;
 
-    scene.add( new THREE.Points( this.geometry, material));
+    scene.add( new Points( this.geometry, material));
 
 };
 

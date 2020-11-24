@@ -1,6 +1,14 @@
-import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 import utils from './utils';
+import {
+    SpriteMaterial,
+    Sprite,
+    Texture,
+    Geometry,
+    Vector3,
+    LineBasicMaterial,
+    Line,
+} from  'three';
 
 
 var createTopCanvas = function(color) {
@@ -57,24 +65,24 @@ var Pin = function(lat, lon, text, altitude, scene, smokeProvider, _opts){
 
     /* the line */
 
-    this.lineGeometry = new THREE.Geometry();
-    const lineMaterial = new THREE.LineBasicMaterial({
+    this.lineGeometry = new Geometry();
+    const lineMaterial = new LineBasicMaterial({
         color: opts.lineColor,
         linewidth: opts.lineWidth
     });
 
     const point = utils.mapPoint(lat,lon);
 
-    this.lineGeometry.vertices.push(new THREE.Vector3(point.x, point.y, point.z));
-    this.lineGeometry.vertices.push(new THREE.Vector3(point.x, point.y, point.z));
-    this.line = new THREE.Line(this.lineGeometry, lineMaterial);
+    this.lineGeometry.vertices.push(new Vector3(point.x, point.y, point.z));
+    this.lineGeometry.vertices.push(new Vector3(point.x, point.y, point.z));
+    this.line = new Line(this.lineGeometry, lineMaterial);
 
     /* the label */
     const labelCanvas = utils.createLabel(text, 18, opts.labelColor, opts.font);
-    const labelTexture = new THREE.Texture(labelCanvas);
+    const labelTexture = new Texture(labelCanvas);
     labelTexture.needsUpdate = true;
 
-    const labelMaterial = new THREE.SpriteMaterial({
+    const labelMaterial = new SpriteMaterial({
        map : labelTexture,
     //    useScreenCoordinates: false,
        opacity:0,
@@ -83,16 +91,16 @@ var Pin = function(lat, lon, text, altitude, scene, smokeProvider, _opts){
        name: "whodispin"
     });
 
-   this.labelSprite = new THREE.Sprite(labelMaterial);
+   this.labelSprite = new Sprite(labelMaterial);
    this.labelSprite.position.set(point.x*altitude*1.1, point.y*altitude + (point.y < 0 ? -15 : 30), point.z*altitude*1.1);
    this.labelSprite.scale.set(labelCanvas.width, labelCanvas.height);
 
    /* the top */
 
-   const topTexture = new THREE.Texture(createTopCanvas(opts.topColor));
+   const topTexture = new Texture(createTopCanvas(opts.topColor));
    topTexture.needsUpdate = true;
-   const topMaterial = new THREE.SpriteMaterial({name:"yolopin", map: topTexture, depthTest: true, fog: true, opacity: 0});
-   this.topSprite = new THREE.Sprite(topMaterial);
+   const topMaterial = new SpriteMaterial({name:"yolopin", map: topTexture, depthTest: true, fog: true, opacity: 0});
+   this.topSprite = new Sprite(topMaterial);
    this.topSprite.scale.set(20, 20);
    this.topSprite.position.set(point.x * altitude, point.y * altitude, point.z * altitude);
 
