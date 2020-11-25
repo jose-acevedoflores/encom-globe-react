@@ -49,7 +49,8 @@ EncomGlobe.propTypes = {
         PropTypes.exact({
           lat: PropTypes.number,
           lng: PropTypes.number,
-          label: PropTypes.string
+          label: PropTypes.string,
+          when: PropTypes.number,
         })
       ).isRequired,
       tiles: PropTypes.arrayOf(
