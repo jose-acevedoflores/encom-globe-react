@@ -1,9 +1,10 @@
 import React from 'react'
-import styles from './styles.module.css'
+import './styles.module.css'
 import Globe from './encom/ReactGlobe';
 import PropTypes from 'prop-types';
 import grid from './encom/data/grid';
 import pinLocations from './encom/data/pin-locations';
+import "./load-font.js";
 
 export const EncomGlobe = props => {
 

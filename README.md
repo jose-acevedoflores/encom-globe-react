@@ -6,13 +6,12 @@
 
 ## WORK IN PROGRESS
 
-This project is a fork of [arscan/encom-globe](https://github.com/arscan/encom-globe) with the goal of updating the code to the latest Three.js and make it an module that can be used with ReactJS.
+This project is a fork of [arscan/encom-globe](https://github.com/arscan/encom-globe) with the goal of updating the code to the latest Three.js and make it a module that can be used with ReactJS.
 
 ## Install
 
 ```bash
-TODO
-npm install --save encom-globe-react
+npm install --save encom-globe-react @tweenjs/tween.js three pusher.color vec2
 ```
 
 ## Usage
