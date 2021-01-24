@@ -9,15 +9,18 @@ const demoMarkers = [marker1, marker2];
 
 const App = () => {
 
-  const [state, setState] = React.useState({width: window.innerWidth, height: window.innerHeight});
+  const initialSize = Math.min(window.innerWidth, window.innerHeight);
+  const [state, setState] = React.useState({width: initialSize, height: initialSize});
   React.useEffect(()=> {
 
-      const cb = () => setState({width: window.innerWidth, height: window.innerHeight});
-
+      const cb = () => {
+        const newSize = Math.min(window.innerWidth, window.innerHeight);
+        setState({width: newSize, height: newSize})
+      };
       window.addEventListener( 'resize', cb, false );
 
       return () => window.removeEventListener('resize', cb)
-  });
+  }, []);
 
   const [markers, setMarkers] = React.useState([]);
   const [constellations, setConstellations] = React.useState([]);

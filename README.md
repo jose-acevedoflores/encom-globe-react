@@ -8,6 +8,8 @@
 
 This project is a fork of [arscan/encom-globe](https://github.com/arscan/encom-globe) with the goal of updating the code to the latest Three.js and make it a module that can be used with ReactJS.
 
+Demo can be seen [here](https://encom.z5.web.core.windows.net/)
+
 ## Install
 
 ```bash
@@ -28,15 +30,18 @@ const demoMarkers = [marker1, marker2];
 
 const App = () => {
 
-  const [state, setState] = React.useState({width: window.innerWidth, height: window.innerHeight});
+  const initialSize = Math.min(window.innerWidth, window.innerHeight);
+  const [state, setState] = React.useState({width: initialSize, height: initialSize});
   React.useEffect(()=> {
 
-      const cb = () => setState({width: window.innerWidth, height: window.innerHeight});
-
+      const cb = () => {
+        const newSize = Math.min(window.innerWidth, window.innerHeight);
+        setState({width: newSize, height: newSize})
+      };
       window.addEventListener( 'resize', cb, false );
 
       return () => window.removeEventListener('resize', cb)
-  });
+  }, []);
 
   const [markers, setMarkers] = React.useState([]);
   const [constellations, setConstellations] = React.useState([]);

@@ -21,3 +21,8 @@ code {
       url('./fonts/Inconsolata-Light.ttf')  format('truetype'),
       url('./fonts/Inconsolata-Medium.ttf')  format('truetype');
 } */
+
+#root {
+  display: flex;
+  justify-content: center;
+}
