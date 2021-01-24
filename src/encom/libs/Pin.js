@@ -8,6 +8,7 @@ import {
     Vector3,
     LineBasicMaterial,
     Line,
+    LinearFilter,
 } from  'three';
 
 
@@ -80,6 +81,8 @@ var Pin = function(lat, lon, text, altitude, scene, smokeProvider, _opts){
     /* the label */
     const labelCanvas = utils.createLabel(text, 18, opts.labelColor, opts.font);
     const labelTexture = new Texture(labelCanvas);
+    labelTexture.minFilter = LinearFilter;
+    labelTexture.magFilter = LinearFilter;
     labelTexture.needsUpdate = true;
 
     const labelMaterial = new SpriteMaterial({

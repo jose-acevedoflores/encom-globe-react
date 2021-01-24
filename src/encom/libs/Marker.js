@@ -10,6 +10,7 @@ import {
     Line,
     LineSegments,
     LineDashedMaterial,
+    LinearFilter,
 } from  'three';
 
 var createMarkerTexture = function(markerColor) {
@@ -103,6 +104,8 @@ var Marker = function(lat, lon, text, altitude, previous, scene, _opts){
 
     labelCanvas = utils.createLabel(text.toUpperCase(), this.opts.fontSize, this.opts.labelColor, this.opts.font, this.opts.markerColor);
     labelTexture = new Texture(labelCanvas);
+    labelTexture.minFilter = LinearFilter;
+    labelTexture.magFilter = LinearFilter;
     labelTexture.needsUpdate = true;
 
     labelMaterial = new SpriteMaterial({
