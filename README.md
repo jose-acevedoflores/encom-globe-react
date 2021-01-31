@@ -9,6 +9,7 @@
 This project is a fork of [arscan/encom-globe](https://github.com/arscan/encom-globe) with the goal of updating the code to the latest Three.js and make it a module that can be used with ReactJS.
 
 Demo can be seen [here](https://encom.z5.web.core.windows.net/)
+For referencing the props [look here](src/index.js)
 
 ## Install
 
