@@ -21,7 +21,8 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "gen-docs": "react-docgen -o EncomGlobeDocs.json src/index.js"
   },
   "peerDependencies": {
     "react": "^16.0.0",
@@ -49,6 +50,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
+    "react-docgen": "^5.3.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^4.0.1"
   },

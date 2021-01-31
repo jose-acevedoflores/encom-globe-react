@@ -61,7 +61,11 @@ class Globe extends React.Component {
     }
 
     render() {
-        return <div id="globe-div" ref={ref => (this.mount = ref)} />;
+        return <div
+            id="globe-div"
+            ref={ref => (this.mount = ref)}
+            style={{width: this.props.width, height: this.props.height}}
+        />;
     }
 }
 

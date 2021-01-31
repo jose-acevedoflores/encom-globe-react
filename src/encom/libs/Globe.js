@@ -44,17 +44,17 @@ var latLon2d = function(lat,lon){
 
 
 var addInitialData = function(){
-    if(this.data.length === 0){
+    if(this.pinsData.length === 0){
         return;
     }
     
     let next;
-    while(this.data.length > 0 && this.firstRunTime + (next = this.data.pop()).when < Date.now()){
+    while(this.pinsData.length > 0 && this.firstRunTime + (next = this.pinsData.pop()).when < Date.now()){
         this.addPin(next.lat, next.lng, next.label);
     }
 
     if(this.firstRunTime + next.when >= Date.now()){
-        this.data.push(next);
+        this.pinsData.push(next);
     }
 };
 
@@ -317,7 +317,7 @@ function Globe(width, height, opts){
         pointsVariance: .2,
         maxPins: 500,
         maxMarkers: 4,
-        data: [],
+        pinsData: [],
         tiles: [],
         viewAngle: 0
     };
@@ -342,10 +342,10 @@ function Globe(width, height, opts){
 
     this.domElement = this.renderer.domElement;
 
-    this.data.sort(function(a,b){return (b.lng - b.label.length * 2) - (a.lng - a.label.length * 2)});
+    this.pinsData.sort(function(a,b){return (b.lng - b.label.length * 2) - (a.lng - a.label.length * 2)});
 
-    for(let i = 0; i< this.data.length; i++){
-        this.data[i].when = this.introLinesDuration*((180+this.data[i].lng)/360.0) + 500; 
+    for(let i = 0; i< this.pinsData.length; i++){
+        this.pinsData[i].when = this.introLinesDuration*((180+this.pinsData[i].lng)/360.0) + 500;
     }
 
 
